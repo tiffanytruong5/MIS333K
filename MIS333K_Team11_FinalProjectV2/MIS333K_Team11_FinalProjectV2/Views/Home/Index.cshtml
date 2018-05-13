@@ -1,0 +1,47 @@
+﻿@model MIS333K_Team11_FinalProjectV2.ViewModels.CustomerWelcomeVM
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+@if (User.IsInRole("Customer"))
+{
+    <div class="jumbotron">
+        <h2>Welcome @Model.CustomerName! </h2>
+        <p>These are today's featured movies:</p>
+
+        <p>Theater 1:</p>
+        <p>The Sting 9:05 AM</p>
+        <p>WarGames 11:45 AM</p>
+        <p>Office Space 2:10 PM</p>
+        <p>Diamonds are Forever 4:15 PM</p>
+        <p>West Side Story 6:40 PM</p>
+        <p>Psycho 9:55 PM</p>
+
+
+        <p>Theater 2</p>
+        <p>Mary Poppins 9:10 AM</p>
+        <p>The Muppet Movie 12:00 PM</p>
+        <p>The Princess Bride 2:20 PM</p>
+        <p>The Lego Movie 4:30 PM</p>
+        <p>Finding Nemo 6:45 PM</p>
+        <p>Harry Potter and the Goblet of Fire 8:55 PM</p>
+        <br />
+    </div>
+}
+
+else
+
+{
+    <h1> Welcome to Team 11's Movie Theater</h1>
+    <body align="center">
+        <div>
+            @*<img src="https://drive.google.com/file/d/1wvV3qbH2O1agfUjpgmJEbWSRugFwzi5v/view " />*@
+            <img src= "@Url.Content("/Content/Images/Team11Theater.jpg")" />
+        </div>
+        <br />
+    </body>
+}
+

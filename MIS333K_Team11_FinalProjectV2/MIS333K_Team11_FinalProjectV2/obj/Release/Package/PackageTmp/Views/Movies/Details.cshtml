@@ -1,0 +1,163 @@
+﻿@model MIS333K_Team11_FinalProjectV2.Models.Movie
+@using MIS333K_Team11_FinalProjectV2.Models
+@using Microsoft.AspNet.Identity
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovieNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieTitle)
+        </dt>
+
+        @*<dd>
+            @Html.DisplayFor(model => model.MovieTitle)
+            @if (!User.IsInRole("Manager") && !User.IsInRole("Employee"))
+            {
+                <span>(@Html.ActionLink("Create an Order", "Create", "Orders", new { id = Model.MovieID }, null))</span>
+            }
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieOverview)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovieOverview)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RunningTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RunningTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tagline)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tagline)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MPAAratings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MPAAratings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieRevenue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovieRevenue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Ratings)
+        </dt>*@
+        <dd>
+            @*@if (Model.Ratings.ToList().Any())
+            {
+                @Model.Ratings.ToList().Average(x => x.RatingScore).ToString("0.#")
+            }*@
+             @*<dt>
+            @if ((User.IsInRole("Customer")) || (User.IsInRole("DisabledCustomer")))
+            {
+                @Html.ActionLink("Review This Movie", "Create", "Review", new { id = Model.MovieID, name = "movieReview" }, null)
+            }
+        </dt>*@
+        <dd>
+            @ViewBag.ReviewError
+        </dd>
+    </dl>
+    <div>
+        <table class="table table-sm table-striped">
+            <tr>
+                <th>Genre(s)</th>
+            </tr>
+            @foreach (Genre gen in Model.Genres)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => gen.GenreName)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<p>
+    @if (User.IsInRole("Manager"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MovieID })
+    }
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Users
+        </th>
+        <th>
+            Reviews
+        </th>
+        <th>
+            Ratings
+        </th>
+
+    </tr>
+    @foreach (var item in Model.Reviews)
+    {
+
+        <tr>
+            <td>@item.AppUser.UserName</td>
+            <td>@item.Comment</td>
+            <td>@((int)item.StarRating)</td>
+            @if (User.Identity.GetUserId() == item.AppUser.Id || User.IsInRole("Manager") || User.IsInRole("Employee"))
+            {
+                <td>@Html.ActionLink("Edit", "Edit", "Reviews", new { id = item.MovieReview.MovieID, ReviewID = item.ReviewID, name = "movieReview" }, null)</td>
+                <td>@Html.ActionLink("Delete", "Delete", "Reviews", new { id = item.MovieReview.MovieID, ReviewID = item.ReviewID, name = "movieReview" }, null)</td>
+            }
+        </tr>
+    }
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
